@@ -3,8 +3,9 @@ import FormVagas from '../../components/FormVagas'
 
 import Vaga from '../../components/Vaga'
 
-import styles from './ListaVagas.module.css'
+import { Vagas } from './styles'
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 type Vaga = {
   id: string
   titulo: string
@@ -86,20 +87,42 @@ const vagas = [
     salarioMin: 4000,
     salarioMax: 5000,
     requisitos: ['HTML', 'CSS', 'JavaScript', 'jQuery']
+  },
+  {
+    id: 8,
+    titulo: 'Desenvolvedor front-end',
+    localizacao: 'São Paulo/SP',
+    nivel: 'junior',
+    modalidade: 'clt',
+    salarioMin: 4000,
+    salarioMax: 5000,
+    requisitos: ['HTML', 'CSS', 'JavaScript', 'jQuery']
+  },
+  {
+    id: 9,
+    titulo: 'Desenvolvedor front-end',
+    localizacao: 'São Paulo/SP',
+    nivel: 'junior',
+    modalidade: 'clt',
+    salarioMin: 4000,
+    salarioMax: 5000,
+    requisitos: ['HTML', 'CSS', 'JavaScript', 'jQuery']
   }
 ]
 
 const ListaVagas = () => {
   const [filtro, setFiltro] = useState<string>('')
 
-  const vagasFiltradas = vagas.filter(
-    (x) => x.titulo.toLocaleLowerCase().search(filtro) >= 0
+  const vagasFiltradas = vagas.filter((x) =>
+    x.titulo.toLowerCase().includes(filtro.toLowerCase())
   )
 
   return (
     <div>
-      <FormVagas aoPesquisar={(termo: string) => setFiltro(termo)} />
-      <ul className={styles.vagas}>
+      <FormVagas
+        aoPesquisar={(termo: string | undefined) => setFiltro(termo ?? '')}
+      />
+      <Vagas>
         {vagasFiltradas.map((vag) => (
           <Vaga
             key={vag.id}
@@ -112,7 +135,7 @@ const ListaVagas = () => {
             requisitos={vag.requisitos}
           />
         ))}
-      </ul>
+      </Vagas>
     </div>
   )
 }
